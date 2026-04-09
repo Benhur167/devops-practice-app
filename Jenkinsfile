@@ -5,18 +5,15 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("devops-app")
-                }
+                bat 'docker build -t devops-app .'
             }
         }
 
         stage('Run Container') {
-            steps {
-                script {
-                    sh 'docker run -d -p 3000:3000 devops-app'
-                }
-            }
-        }
+    steps {
+        bat 'docker rm -f devops-app || exit 0'
+        bat 'docker run -d -p 3000:3000 --name devops-app devops-app'
+    }
+}
     }
 }
