@@ -10,10 +10,12 @@ pipeline {
         }
 
         stage('Run Container') {
-    steps {
-        bat 'docker rm -f devops-app || exit 0'
-        bat 'docker run -d -p 3000:3000 --name devops-app devops-app'
-    }
-}
+            steps {
+                bat '''
+                docker rm -f devops-app 2>nul
+                docker run -d -p 3000:3000 --name devops-app devops-app
+                '''
+            }
+        }
     }
 }
